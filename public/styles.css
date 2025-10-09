@@ -1,0 +1,51 @@
+:root{
+  --bg:#f5f6fa; --card:#ffffff; --ink:#222; --muted:#666;
+  --brand:#2c3e50; --brand-2:#34495e; --ok:#2ecc71; --danger:#dc3545;
+  --shadow:0 10px 25px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0; font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif; color:var(--ink); background:var(--bg)}
+
+/* ===== Login ===== */
+.centered{display:grid; place-items:center}
+.card{
+  background:var(--card); width:min(420px, 92vw);
+  padding:28px; border-radius:14px; box-shadow:var(--shadow);
+}
+.card h2{margin:0 0 16px 0}
+label{display:block; margin:14px 0 6px}
+input{
+  width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:10px;
+  outline:none;
+}
+input:focus{border-color:#999}
+.btn{
+  display:inline-block; margin-top:16px; padding:10px 16px; border-radius:10px;
+  background:var(--brand); color:#fff; text-decoration:none; border:none; cursor:pointer;
+}
+.btn:hover{background:var(--brand-2)}
+.msg{margin-top:10px; color:var(--muted)}
+.msg.error{color:var(--danger)}
+
+/* ===== Dashboard ===== */
+.layout{display:grid; grid-template-columns:240px 1fr; min-height:100%}
+.sidebar{
+  background:var(--brand); color:#fff; padding:22px; box-shadow:var(--shadow)
+}
+.sidebar h2{margin-top:0}
+.sidebar nav{display:grid; gap:8px; margin-top:12px}
+.sidebar a{
+  color:#fff; text-decoration:none; padding:10px 12px; border-radius:10px; display:block
+}
+.sidebar a:hover,.sidebar a.active{background:var(--brand-2)}
+.content{padding:24px}
+.topbar{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px}
+.btn.danger{background:var(--danger)}
+.btn.danger:hover{filter:brightness(.95)}
+.cards{
+  display:grid; gap:18px;
+  grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+}
+.cards .card{padding:20px; border-radius:14px; background:#fff; box-shadow:var(--shadow)}
+.cards .card h3{margin:0 0 8px}

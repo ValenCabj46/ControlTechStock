@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Iniciar sesión</title>
+</head>
+<body>
+  <form id="loginForm">
+    <h2>Iniciar sesión</h2>
+
+    <label for="nombreUsuario">Usuario:</label>
+    <input type="text" id="nombreUsuario" required>
+
+    <label for="contrasena">Contraseña:</label>
+    <input type="password" id="contrasena" required>
+
+    <button type="submit">Ingresar</button>
+  </form>
+
+  <p id="mensaje" style="color:red;"></p>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const nombreUsuario = document.getElementById("nombreUsuario").value.trim();
+      const contrasena = document.getElementById("contrasena").value.trim();
+      const mensaje = document.getElementById("mensaje");
+      mensaje.textContent = "";
+
+      try {
+        const res = await fetch("/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ nombreUsuario, contrasena }),
+        });
+
+        const data = await res.json();
+        console.log("Respuesta del servidor:", data);
+
+        if (data.success && data.redirectUrl) {
+          window.location.href = data.redirectUrl;
+        } else {
+          mensaje.textContent = data.message || "Error al iniciar sesión.";
+        }
+      } catch (error) {
+        console.error("Error al enviar login:", error);
+        mensaje.textContent = "⚠️ Error en el servidor.";
+      }
+    });
+  </script>
+</body>
+</html>
