@@ -1,35 +1,52 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Usuarios - TechStock Manager</title>
-  <style>
-    body { font-family: "Segoe UI", Arial, sans-serif; background: #f4f6f8; margin: 0; }
-    header { background: #1e293b; color: #fff; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
-    header a { color: white; text-decoration: none; margin-left: 15px; }
-    main { padding: 40px; }
-    .container { background: #fff; border-radius: 10px; padding: 30px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-  </style>
+  <meta charset="utf-8">
+  <title>Usuarios | ControlTechStock</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="styles.css" rel="stylesheet">
+  <script defer src="script.js"></script>
 </head>
 <body>
-  <header>
-    <h1>Usuarios</h1>
-    <nav>
-      <a href="dashboard.html">🏠 Dashboard</a>
-      <a href="inventario.html">📦 Inventario</a>
-      <a href="reportes.html">📊 Reportes</a>
-      <a href="configuracion.html">⚙️ Configuración</a>
-      <a href="/">🚪 Salir</a>
-    </nav>
-  </header>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><div class="logo">CTS</div><div><div>ControlTechStock</div><small>Usuarios & Roles</small></div></div>
+      <nav class="nav">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="inventario.html">Inventario</a>
+        <a href="reportes.html">Reportes</a>
+        <a href="usuarios.html">Usuarios</a>
+        <a href="configuracion.html">Configuración</a>
+      </nav>
+    </aside>
+    <main class="content">
+      <div class="header"><div class="hstack"><span class="badge">Diseño UI (no funcional)</span></div></div>
 
-  <main>
-    <div class="container">
-      <h2>Gestión de Usuarios</h2>
-      <p>Desde aquí se podrán administrar los usuarios registrados y asignar roles dentro del sistema.</p>
-      <p>Los roles determinarán los permisos de acceso y las funcionalidades disponibles.</p>
-    </div>
-  </main>
+      <div class="card">
+        <div class="section-title">Usuarios</div>
+        <table class="table">
+          <thead><tr><th>Usuario</th><th>Rol</th><th>Estado</th></tr></thead>
+          <tbody>
+            <tr><td>admin</td><td>Administrador</td><td><span class="kpi-chip">Activo</span></td></tr>
+            <tr><td>jrodriguez</td><td>Encargado</td><td><span class="kpi-chip">Activo</span></td></tr>
+            <tr><td>marias</td><td>Vendedor</td><td><span class="kpi-chip warn">Pendiente</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Permisos por rol (mock)</div>
+        <table class="table">
+          <thead><tr><th>Rol</th><th>Permisos</th></tr></thead>
+          <tbody>
+            <tr><td>Administrador</td><td>Todos</td></tr>
+            <tr><td>Encargado</td><td>Ver catálogos, Ver/Crear movimientos</td></tr>
+            <tr><td>Vendedor</td><td>Ver productos, Ver reportes</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
 </body>
 </html>

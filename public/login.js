@@ -1,14 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.getElementById("btnLogin");
-  const msg = document.getElementById("msg");
+  const form = document.getElementById("loginForm");
+  const btn  = document.getElementById("btnLogin");
+  const msg  = document.getElementById("msg");
 
-  
-  document.getElementById("loginForm").addEventListener("submit", (e) => e.preventDefault());
+  form?.addEventListener("submit", (e) => e.preventDefault());
 
-  btn.addEventListener("click", async () => {
+  btn?.addEventListener("click", async () => {
     msg.textContent = "";
-    const nombreUsuario = document.getElementById("nombreUsuario").value.trim();
-    const contrasena = document.getElementById("contrasena").value.trim();
+    msg.className = "msg";
+
+    const nombreUsuario = document.getElementById("nombreUsuario")?.value.trim();
+    const contrasena    = document.getElementById("contrasena")?.value.trim();
 
     if (!nombreUsuario || !contrasena) {
       msg.textContent = "Completa usuario y contraseña.";
@@ -23,24 +25,35 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify({ nombreUsuario, contrasena })
       });
 
-      // Si el servidor no responde JSON válido, no redirige
-      const data = await resp.json().catch(() => null);
-      console.log("Respuesta del servidor:", data);
+      const ct = resp.headers.get("content-type") || "";
+      // Log de depuración útil:
+      console.log("[LOGIN] status:", resp.status, "content-type:", ct);
 
-      if (!data || data.ok !== true) {
-        msg.textContent = (data && data.mensaje) ? data.mensaje : "Usuario o contraseña incorrectos.";
+      if (!ct.includes("application/json")) {
+        const text = await resp.text().catch(()=>"(sin texto)");
+        console.error("[LOGIN] Respuesta no-JSON:", text);
+        msg.textContent = "Respuesta inesperada del servidor.";
         msg.className = "msg error";
-        return; 
+        return;
       }
 
-      // Solo redirige cuando ok = true
-      window.location.href = data.redirect;
-    } catch (e) {
-      console.error("Error en login.js:", e);
+      const data = await resp.json();
+      console.log("[LOGIN] payload:", data);
+
+      if (resp.ok && data?.ok === true && data.redirect) {
+        msg.textContent = "Acceso concedido. Redirigiendo…";
+        msg.className   = "msg ok";
+        window.location.href = data.redirect;
+        return;
+      }
+
+      // Muestra el motivo real llegado desde el backend
+      msg.textContent = data?.mensaje || "Usuario o contraseña incorrectos.";
+      msg.className   = "msg error";
+    } catch (err) {
+      console.error("[LOGIN] Error de red:", err);
       msg.textContent = "Error de conexión con el servidor.";
-      msg.className = "msg error";
+      msg.className   = "msg error";
     }
   });
 });
-
-

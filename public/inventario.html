@@ -1,36 +1,56 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Inventario - TechStock Manager</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    body { font-family: "Segoe UI", Arial, sans-serif; background: #f4f6f8; margin: 0; }
-    header { background: #1e293b; color: #fff; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
-    header a { color: white; text-decoration: none; margin-left: 15px; }
-    main { padding: 40px; }
-    .container { background: #fff; border-radius: 10px; padding: 30px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-  </style>
+  <meta charset="utf-8">
+  <title>Inventario | ControlTechStock</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="styles.css" rel="stylesheet">
+  <script defer src="script.js"></script>
 </head>
 <body>
-  <header>
-    <h1>Inventario</h1>
-    <nav>
-      <a href="dashboard.html">🏠 Dashboard</a>
-      <a href="reportes.html">📊 Reportes</a>
-      <a href="usuarios.html">👤 Usuarios</a>
-      <a href="configuracion.html">⚙️ Configuración</a>
-      <a href="/">🚪 Salir</a>
-    </nav>
-  </header>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><div class="logo">CTS</div><div><div>ControlTechStock</div><small>Inventario</small></div></div>
+      <nav class="nav">
+        <a href="dashboard.html">Dashboard</a>
+        <a class="active" href="inventario.html">Inventario</a>
+        <a href="reportes.html">Reportes</a>
+        <a href="usuarios.html">Usuarios</a>
+        <a href="configuracion.html">Configuración</a>
+      </nav>
+    </aside>
 
-  <main>
-    <div class="container">
-      <h2>Gestión de Inventario</h2>
-      <p>Esta sección permitirá consultar, agregar y editar productos del inventario de tecnología.</p>
-      <p>Aquí se mostrarán los productos con su cantidad, categoría y estado de stock.</p>
-    </div>
-  </main>
+    <main class="content">
+      <div class="header">
+        <div class="hstack">
+          <span class="badge">Listado conectado a SQL</span>
+        </div>
+        <a class="btn secondary" href="dashboard.html">Volver</a>
+      </div>
+
+      <div class="card">
+        <div class="hstack" style="justify-content: space-between;">
+          <input id="filtroInventario" class="input" style="max-width:360px" placeholder="Buscar por nombre o SKU…">
+          <div class="hstack">
+            <span class="badge">Categoría: Todas</span>
+            <span class="badge">Proveedor: Todos</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <table class="table">
+          <thead>
+              <tr><th>SKU</th><th>Producto</th><th>Categoría</th><th>Proveedor</th><th>Stock</th><th>Estado</th></tr>
+          </thead>
+          <tbody id="tbodyInventario">
+
+  </tbody>
+</table>
+
+      </div>
+    </main>
+  </div>
 </body>
 </html>
+

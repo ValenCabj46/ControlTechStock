@@ -1,137 +1,86 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Panel principal - TechStock Manager</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Arial, sans-serif;
-      background-color: #f4f6f8;
-      color: #333;
-    }
-
-    header {
-      background-color: #1e293b;
-      color: #fff;
-      padding: 20px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-
-    header h1 {
-      font-size: 1.5rem;
-      margin: 0;
-    }
-
-    header button {
-      background-color: #ef4444;
-      border: none;
-      color: white;
-      padding: 10px 15px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    header button:hover {
-      background-color: #dc2626;
-    }
-
-    main {
-      padding: 40px;
-    }
-
-    .dashboard-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      margin-top: 30px;
-    }
-
-    a.card {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .card {
-      background-color: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-
-    .card h2 {
-      font-size: 1.2rem;
-      margin-bottom: 10px;
-      color: #1e293b;
-    }
-
-    .card p {
-      color: #555;
-      font-size: 0.95rem;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      background-color: #1e293b;
-      color: #fff;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      font-size: 0.9rem;
-    }
-  </style>
+  <meta charset="utf-8">
+  <title>Dashboard | ControlTechStock</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="styles.css" rel="stylesheet">
+  <script defer src="script.js"></script>
 </head>
 <body>
-  <header>
-    <h1>Panel de Control - TechStock Manager</h1>
-    <button onclick="cerrarSesion()">Cerrar sesión</button>
-  </header>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">CTS</div>
+        <div>
+          <div>ControlTechStock</div>
+          <small>Panel principal</small>
+        </div>
+      </div>
+      <nav class="nav">
+        <a class="active" href="dashboard.html">Dashboard</a>
+        <a href="inventario.html">Inventario</a>
+        <a href="reportes.html">Reportes</a>
+        <a href="usuarios.html">Usuarios</a>
+        <a href="configuracion.html">Configuración</a>
+      </nav>
+    </aside>
 
-  <main>
-    <h2>Bienvenido, Administrador 👋</h2>
-    <p>Has iniciado sesión correctamente. Aquí podrás gestionar y visualizar el estado de tu sistema.</p>
+    <main class="content">
+      <div class="header">
+        <div class="hstack">
+          <span class="badge">Versión UI – prototipo</span>
+          <span class="badge">Semáforo activo</span>
+        </div>
+        <a class="btn secondary" href="login.html">Cerrar sesión</a>
+      </div>
 
-    <div class="dashboard-container">
-      <a href="inventario.html" class="card">
-        <h2>📦 Inventario</h2>
-        <p>Consulta y controla el stock de productos en tiempo real.</p>
-      </a>
-      <a href="reportes.html" class="card">
-        <h2>📊 Reportes</h2>
-        <p>Genera reportes de ventas, compras y niveles de stock.</p>
-      </a>
-      <a href="usuarios.html" class="card">
-        <h2>👤 Usuarios</h2>
-        <p>Gestiona las cuentas de acceso y roles del sistema.</p>
-      </a>
-      <a href="configuracion.html" class="card">
-        <h2>⚙️ Configuración</h2>
-        <p>Personaliza los parámetros del sistema según tus necesidades.</p>
-      </a>
-    </div>
-  </main>
+      <div class="grid kpis">
+        <div class="card">
+          <h3>Stock total (unidades)</h3>
+          <div class="big" id="kpiStockTotal">—</div>
+          <div class="subtle">Actualizado desde SQL</div>
+        </div>
+        <div class="card">
+          <h3>Productos con stock bajo</h3>
+          <div class="big" id="kpiCriticos">—</div>
+          <div class="kpi-chip warn">Atención</div>
+        </div>
+        <div class="card">
+          <h3>Valor estimado de stock</h3>
+          <div class="big" id="kpiValorInventario">—</div>
+          <div class="subtle">Precio promedio ponderado</div>
+        </div>
+        <div class="card">
+          <h3>Movimientos hoy (ref.)</h3>
+          <div class="big" id="kpiMovRef">—</div>
+          <div class="trend">auto-cálculo simple</div>
+        </div>
+      </div>
 
-  <footer>
-    © 2025 TechStock Manager | Panel de administración
-  </footer>
+      <div class="card">
+        <div class="section-title">Semaforización de stock</div>
+        <div class="legend">
+          <span><span class="dot bad"></span> Rojo: sin stock / crítico (≤2)</span>
+          <span><span class="dot warn"></span> Amarillo: bajo mínimo (3–9)</span>
+          <span><span class="dot ok"></span> Verde: suficiente (≥10)</span>
+        </div>
+      </div>
 
-  <script>
-    function cerrarSesion() {
-      alert("Sesión cerrada correctamente");
-      window.location.href = "/";
-    }
-  </script>
+      <!-- AHORA el tbody lo completa script.js con /api/productos/criticos -->
+      <div class="card">
+        <div class="section-title">Productos críticos (clic para ver detalle)</div>
+        <table class="table">
+        <thead>
+          <tr><th>Producto</th><th>Categoría</th><th>Stock</th><th>Estado</th></tr>
+        </thead>
+        <tbody id="tbodyCriticos">
+  </tbody>
+</table>
+
+      </div>
+
+    </main>
+  </div>
 </body>
 </html>
