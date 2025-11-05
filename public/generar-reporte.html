@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Generar reporte | ControlTechStock</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="style.css" rel="stylesheet">
+  <style>
+    .container{max-width:980px;margin:0 auto;padding:0 16px}
+    .section-title{margin:10px 0 6px;color:#cbd5e1;font-weight:800;letter-spacing:.4px}
+    .form-grid{display:grid;grid-template-columns:repeat(3,minmax(180px,1fr));gap:12px}
+    @media (max-width:768px){.form-grid{grid-template-columns:1fr}}
+    .btn{appearance:none;border:none;border-radius:10px;padding:10px 14px;color:#0b1224;cursor:pointer;
+      background:linear-gradient(135deg,#22d3ee,#38bdf8);font-weight:700}
+    .btn-outline{appearance:none;border:1px solid rgba(255,255,255,.2);background:transparent;color:#e5e7eb;border-radius:10px;padding:10px 14px;cursor:pointer}
+    .subtle{color:#94a3b8}
+  </style>
+</head>
+<body>
+  <header class="topbar" style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px">
+    <div class="brand">ControlTechStock</div>
+    <nav class="nav">
+      <a href="dashboard.html" class="btn-outline">Dashboard</a>
+      <a href="inventario.html" class="btn-outline">Inventario</a>
+      <a href="reportes.html" class="btn-outline">Reportes</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1 style="margin:16px 0">Generar reporte</h1>
+
+    <div class="card" id="infoProducto">
+      <div class="subtle">Producto seleccionado</div>
+      <h2 id="prodNombre" style="margin:6px 0 0"></h2>
+      <div id="prodMeta" class="subtle"></div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <div class="section-title">Parámetros</div>
+      <div class="form-grid">
+        <div>
+          <div class="subtle">Desde</div>
+          <input id="repDesde" type="date" class="input">
+        </div>
+        <div>
+          <div class="subtle">Hasta</div>
+          <input id="repHasta" type="date" class="input">
+        </div>
+        <div>
+          <div class="subtle">Formato</div>
+          <select id="repFormato" class="input">
+            <option>PDF</option>
+            <option>CSV</option>
+            <option>XLSX</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:14px">
+        <button id="btnGenerar" class="btn">Generar</button>
+        <button class="btn-outline" id="btnVolver">Volver a la ficha</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    (function(){
+      const params = new URLSearchParams(location.search);
+      const id = Number(params.get("id"));
+      const p = (window.productos || []).find(x => x.id === id);
+
+      const nombre = document.getElementById("prodNombre");
+      const meta   = document.getElementById("prodMeta");
+      const btnVolver = document.getElementById("btnVolver");
+
+      if (!p) {
+        nombre.textContent = "Producto no encontrado";
+        meta.textContent = "Verifique el enlace o regrese a la ficha.";
+        btnVolver.onclick = () => history.back();
+        return;
+      }
+
+      nombre.textContent = p.nombre;
+      meta.textContent = `Categoría: ${p.categoria} · Stock: ${p.stock}`;
+
+      btnVolver.onclick = () => {
+        window.location.href = `producto.html?id=${encodeURIComponent(p.id)}`;
+      };
+
+      document.getElementById("btnGenerar").onclick = () => {
+        const desde   = document.getElementById("repDesde").value || "(sin fecha)";
+        const hasta   = document.getElementById("repHasta").value || "(sin fecha)";
+        const formato = document.getElementById("repFormato").value || "PDF";
+        alert(`(Demo) Generando reporte del producto:\n- ${p.nombre}\n- Desde: ${desde}\n- Hasta: ${hasta}\n- Formato: ${formato}`);
+      };
+    })();
+  </script>
+</body>
+</html>

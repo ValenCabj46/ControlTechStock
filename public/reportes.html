@@ -1,35 +1,80 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reportes - TechStock Manager</title>
-  <style>
-    body { font-family: "Segoe UI", Arial, sans-serif; background: #f4f6f8; margin: 0; }
-    header { background: #1e293b; color: #fff; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
-    header a { color: white; text-decoration: none; margin-left: 15px; }
-    main { padding: 40px; }
-    .container { background: #fff; border-radius: 10px; padding: 30px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-  </style>
+  <meta charset="utf-8">
+  <title>Reportes | ControlTechStock</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="styles.css" rel="stylesheet">
+  <script defer src="script.js"></script>
 </head>
 <body>
-  <header>
-    <h1>Reportes</h1>
-    <nav>
-      <a href="dashboard.html">🏠 Dashboard</a>
-      <a href="inventario.html">📦 Inventario</a>
-      <a href="usuarios.html">👤 Usuarios</a>
-      <a href="configuracion.html">⚙️ Configuración</a>
-      <a href="/">🚪 Salir</a>
-    </nav>
-  </header>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">CTS</div>
+        <div>
+          <div>ControlTechStock</div>
+          <small>Reportes</small>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="inventario.html">Inventario</a>
+        <a class="active" href="reportes.html">Reportes</a>
+        <a href="usuarios.html">Usuarios</a>
+        <a href="configuracion.html">Configuración</a>
+      </nav>
+    </aside>
 
-  <main>
-    <div class="container">
-      <h2>Generación de Reportes</h2>
-      <p>En esta sección se podrán generar y visualizar reportes sobre ventas, stock y rendimiento del sistema.</p>
-      <p>El objetivo será ofrecer información clara y útil para la toma de decisiones.</p>
-    </div>
-  </main>
+    <!-- Contenido -->
+    <main class="content">
+      <div class="header">
+        <div class="hstack">
+          <span class="badge">KPIs & Drill</span>
+          <span class="badge">Nivel 2 y 3 habilitados</span>
+        </div>
+        <a class="btn secondary" href="dashboard.html">Volver</a>
+      </div>
+
+      <!-- (Opcional) KPIs de referencia visual -->
+      <div class="grid kpis">
+        <div class="card">
+          <h3>Productos en catálogo</h3>
+          <div id="kpiProdCat" class="big">—</div>
+          <div class="subtle">Total por categoría</div>
+        </div>
+        <div class="card">
+          <h3>Categorías activas</h3>
+          <div id="kpiCats" class="big">—</div>
+          <div class="subtle">Conteo distinto</div>
+        </div>
+        <div class="card">
+          <h3>% en stock bajo</h3>
+          <div id="kpiLowPct" class="big">—</div>
+          <div class="kpi-chip warn">Alerta</div>
+        </div>
+        <div class="card">
+          <h3>Reporte puntual</h3>
+          <div class="subtle">Usá <code>?sku=...</code> para ver un producto</div>
+        </div>
+      </div>
+
+      <!-- Categorías (nivel 1) -->
+      <div class="card">
+        <div class="section-title">Categorías (clic para ver productos)</div>
+        <div id="categorias" class="hstack" style="flex-wrap: wrap; gap:10px">
+          <!-- Botones de categorías se inyectan desde script.js -->
+        </div>
+      </div>
+
+      <!-- Tabla dinámica por categoría o reporte puntual por SKU (nivel 2/3) -->
+      <div id="tabla-categoria" style="margin-top:14px">
+        <div class="card">
+          <p class="subtle">Seleccioná una categoría para ver sus productos, o entrá con <code>?sku=SKU</code> para ver el reporte puntual.</p>
+        </div>
+      </div>
+    </main>
+  </div>
 </body>
 </html>

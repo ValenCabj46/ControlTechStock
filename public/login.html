@@ -1,53 +1,39 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Iniciar sesión</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="Cache-Control" content="no-store" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login — ControlTechStock</title>
+  <style>
+    body { font-family: system-ui, Arial, sans-serif; background:#0f172a; color:#e2e8f0; display:grid; place-items:center; min-height:100vh; margin:0; }
+    .card { width: 360px; background:#0b1220; padding:24px; border-radius:14px; box-shadow: 0 10px 30px rgba(0,0,0,.35); border:1px solid #1f2a44; }
+    h1 { margin:0 0 12px; font-size:22px; }
+    label { display:block; margin:12px 0 6px; font-size:14px; color:#93c5fd; }
+    input { width:100%; padding:10px 12px; border-radius:10px; border:1px solid #1f2a44; background:#0a1224; color:#e2e8f0; outline:none; }
+    input:focus { border-color:#60a5fa; }
+    button { width:100%; margin-top:16px; padding:12px; border:0; border-radius:10px; background:#3b82f6; color:white; font-weight:700; cursor:pointer; }
+    .msg { margin-top:12px; font-size:14px; }
+    .msg.error { color:#f87171; }
+    .msg.ok { color:#34d399; }
+    small { color:#94a3b8; }
+  </style>
 </head>
 <body>
-  <form id="loginForm">
-    <h2>Iniciar sesión</h2>
+  <section class="card">
+    <h1>Iniciar sesión</h1>
+    <form id="loginForm" autocomplete="off">
+      <label for="nombreUsuario">Usuario</label>
+      <input id="nombreUsuario" name="nombreUsuario" autocomplete="off" />
+      <label for="contrasena">Contraseña</label>
+      <input id="contrasena" name="contrasena" type="password" autocomplete="off" />
+      <button id="btnLogin" type="button">Entrar</button>
+      <div id="msg" class="msg"></div>
+      
+    </form>
+  </section>
 
-    <label for="nombreUsuario">Usuario:</label>
-    <input type="text" id="nombreUsuario" required>
-
-    <label for="contrasena">Contraseña:</label>
-    <input type="password" id="contrasena" required>
-
-    <button type="submit">Ingresar</button>
-  </form>
-
-  <p id="mensaje" style="color:red;"></p>
-
-  <script>
-    document.getElementById("loginForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const nombreUsuario = document.getElementById("nombreUsuario").value.trim();
-      const contrasena = document.getElementById("contrasena").value.trim();
-      const mensaje = document.getElementById("mensaje");
-      mensaje.textContent = "";
-
-      try {
-        const res = await fetch("/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ nombreUsuario, contrasena }),
-        });
-
-        const data = await res.json();
-        console.log("Respuesta del servidor:", data);
-
-        if (data.success && data.redirectUrl) {
-          window.location.href = data.redirectUrl;
-        } else {
-          mensaje.textContent = data.message || "Error al iniciar sesión.";
-        }
-      } catch (error) {
-        console.error("Error al enviar login:", error);
-        mensaje.textContent = "⚠️ Error en el servidor.";
-      }
-    });
-  </script>
+  <!-- cache-buster -->
+  <script src="login.js?v=3"></script>
 </body>
 </html>

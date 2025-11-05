@@ -1,35 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Configuración - TechStock Manager</title>
-  <style>
-    body { font-family: "Segoe UI", Arial, sans-serif; background: #f4f6f8; margin: 0; }
-    header { background: #1e293b; color: #fff; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
-    header a { color: white; text-decoration: none; margin-left: 15px; }
-    main { padding: 40px; }
-    .container { background: #fff; border-radius: 10px; padding: 30px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-  </style>
+  <meta charset="utf-8">
+  <title>Configuración | ControlTechStock</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="styles.css" rel="stylesheet">
+  <script defer src="script.js"></script>
 </head>
 <body>
-  <header>
-    <h1>Configuración</h1>
-    <nav>
-      <a href="dashboard.html">🏠 Dashboard</a>
-      <a href="inventario.html">📦 Inventario</a>
-      <a href="reportes.html">📊 Reportes</a>
-      <a href="usuarios.html">👤 Usuarios</a>
-      <a href="/">🚪 Salir</a>
-    </nav>
-  </header>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><div class="logo">CTS</div><div><div>ControlTechStock</div><small>Configuración</small></div></div>
+      <nav class="nav">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="inventario.html">Inventario</a>
+        <a href="reportes.html">Reportes</a>
+        <a href="usuarios.html">Usuarios</a>
+        <a href="configuracion.html">Configuración</a>
+      </nav>
+    </aside>
+    <main class="content">
+      <div class="header"><div class="hstack"><span class="badge">Preferencias UI (mock)</span></div></div>
 
-  <main>
-    <div class="container">
-      <h2>Opciones de Configuración</h2>
-      <p>Esta sección permitirá modificar las preferencias del sistema y personalizar la aplicación.</p>
-      <p>Podrás cambiar colores, idioma, permisos y otros parámetros globales.</p>
-    </div>
-  </main>
+      <div class="grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card">
+          <div class="section-title">Empresa</div>
+          <div class="subtle">ControlTech S.A.</div>
+          <div class="subtle">CUIT 30-12345678-9</div>
+        </div>
+        <div class="card">
+          <div class="section-title">Notificaciones</div>
+          <div class="subtle">Alertas de stock bajo: Activadas</div>
+          <div class="subtle">Resumen semanal: Activado</div>
+        </div>
+      </div>
+
+    </main>
+  </div>
 </body>
 </html>
