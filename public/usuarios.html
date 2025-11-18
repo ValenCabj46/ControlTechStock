@@ -14,8 +14,8 @@
       <nav class="nav">
         <a href="dashboard.html">Dashboard</a>
         <a href="inventario.html">Inventario</a>
-        <a href="reportes.html">Reportes</a>
-        <a href="usuarios.html">Usuarios</a>
+        <a href="reportes.html">Proveedores</a>
+        <a class="active" href="usuarios.html">Usuarios</a>
         <a href="configuracion.html">Configuración</a>
       </nav>
     </aside>
@@ -26,7 +26,8 @@
         <div class="section-title">Usuarios</div>
         <table class="table">
           <thead><tr><th>Usuario</th><th>Rol</th><th>Estado</th></tr></thead>
-          <tbody>
+          <tbody id="usuariosPageList">
+            <!-- Si quieres, más tarde puedo poblar esto con /api/usuarios (endpoint adicional) -->
             <tr><td>admin</td><td>Administrador</td><td><span class="kpi-chip">Activo</span></td></tr>
             <tr><td>jrodriguez</td><td>Encargado</td><td><span class="kpi-chip">Activo</span></td></tr>
             <tr><td>marias</td><td>Vendedor</td><td><span class="kpi-chip warn">Pendiente</span></td></tr>

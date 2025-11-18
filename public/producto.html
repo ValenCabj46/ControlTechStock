@@ -25,7 +25,7 @@
     <nav class="nav">
       <a href="dashboard.html" class="btn-link">Dashboard</a>
       <a href="inventario.html" class="btn-link">Inventario</a>
-      <a href="reportes.html" class="btn-link">Reportes</a>
+      <a href="reportes.html" class="btn-link">Proveedores</a>
       <a href="login.html" class="btn-outline">Salir</a>
     </nav>
   </header>
@@ -33,16 +33,16 @@
   <main class="container">
     <h1 style="margin:16px 0">Ficha de producto</h1>
 
-    <!-- OJO: este id DEBE ser producto-detalle -->
     <div id="producto-detalle">
       <div class="card">
         <p class="subtle">Cargando producto…</p>
       </div>
     </div>
 
-    <div class="acciones">
+    <div id="fallbackAcciones" class="acciones" style="margin-top:12px">
       <button class="btn-outline" onclick="history.back()">Volver</button>
     </div>
+
   </main>
 
   <script src="script.js"></script>

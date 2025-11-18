@@ -14,7 +14,7 @@
       <nav class="nav">
         <a href="dashboard.html">Dashboard</a>
         <a class="active" href="inventario.html">Inventario</a>
-        <a href="reportes.html">Reportes</a>
+        <a href="reportes.html">Proveedores</a>
         <a href="usuarios.html">Usuarios</a>
         <a href="configuracion.html">Configuración</a>
       </nav>
@@ -32,25 +32,31 @@
         <div class="hstack" style="justify-content: space-between;">
           <input id="filtroInventario" class="input" style="max-width:360px" placeholder="Buscar por nombre o SKU…">
           <div class="hstack">
-            <span class="badge">Categoría: Todas</span>
-            <span class="badge">Proveedor: Todos</span>
+            <span class="badge" id="badgeCategoria">Categoría: Todas</span>
+            <span class="badge" id="badgeProveedor">Proveedor: Todos</span>
           </div>
         </div>
       </div>
 
       <div class="card">
+        <!-- Tabla: cabeceras sincronizadas con script.js -->
         <table class="table">
           <thead>
-              <tr><th>SKU</th><th>Producto</th><th>Categoría</th><th>Proveedor</th><th>Stock</th><th>Estado</th></tr>
+            <tr>
+              <th>SKU</th>
+              <th>Producto</th>
+              <th>Categoría</th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+              <th>Estado</th>
+            </tr>
           </thead>
           <tbody id="tbodyInventario">
-
-  </tbody>
-</table>
-
+            <!-- El JS (renderInventarioSQL) rellena esta tabla -->
+          </tbody>
+        </table>
       </div>
     </main>
   </div>
 </body>
 </html>
-

@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Reportes | ControlTechStock</title>
+  <title>Proveedores | ControlTechStock</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="styles.css" rel="stylesheet">
   <script defer src="script.js"></script>
@@ -15,13 +15,13 @@
         <div class="logo">CTS</div>
         <div>
           <div>ControlTechStock</div>
-          <small>Reportes</small>
+          <small>Proveedores & Precios</small>
         </div>
       </div>
       <nav class="nav">
         <a href="dashboard.html">Dashboard</a>
         <a href="inventario.html">Inventario</a>
-        <a class="active" href="reportes.html">Reportes</a>
+        <a class="active" href="reportes.html">Proveedores</a>
         <a href="usuarios.html">Usuarios</a>
         <a href="configuracion.html">Configuración</a>
       </nav>
@@ -31,50 +31,79 @@
     <main class="content">
       <div class="header">
         <div class="hstack">
-          <span class="badge">KPIs & Drill</span>
-          <span class="badge">Nivel 2 y 3 habilitados</span>
+          <span class="badge">Proveedores</span>
+          <span class="badge">Historial de precios</span>
         </div>
         <a class="btn secondary" href="dashboard.html">Volver</a>
       </div>
 
-      <!-- (Opcional) KPIs de referencia visual -->
+      <!-- KPIs -->
       <div class="grid kpis">
         <div class="card">
-          <h3>Productos en catálogo</h3>
-          <div id="kpiProdCat" class="big">—</div>
-          <div class="subtle">Total por categoría</div>
+          <h3>Proveedores totales</h3>
+          <div id="kpiProvTotal" class="big">—</div>
+          <div class="subtle">Conteo de proveedores</div>
         </div>
         <div class="card">
-          <h3>Categorías activas</h3>
-          <div id="kpiCats" class="big">—</div>
-          <div class="subtle">Conteo distinto</div>
+          <h3>Productos críticos (tot.)</h3>
+          <div id="kpiProvCrit" class="big">—</div>
+          <div class="subtle">Suma de productos en estado crítico</div>
         </div>
         <div class="card">
-          <h3>% en stock bajo</h3>
-          <div id="kpiLowPct" class="big">—</div>
-          <div class="kpi-chip warn">Alerta</div>
+          <h3>Últimos cambios de precio</h3>
+          <div id="kpiPrecioCambios" class="big">—</div>
+          <div class="subtle">Top recientes</div>
         </div>
         <div class="card">
-          <h3>Reporte puntual</h3>
-          <div class="subtle">Usá <code>?sku=...</code> para ver un producto</div>
+          <h3>Acción rápida</h3>
+          <div class="subtle">Filtrar inventario por proveedor o exportar datos</div>
         </div>
       </div>
 
-      <!-- Categorías (nivel 1) -->
+      <!-- Tabla: Proveedores -->
       <div class="card">
-        <div class="section-title">Categorías (clic para ver productos)</div>
-        <div id="categorias" class="hstack" style="flex-wrap: wrap; gap:10px">
-          <!-- Botones de categorías se inyectan desde script.js -->
+        <div class="section-title">Listado de proveedores (clic para filtrar inventario)</div>
+        <div id="proveedoresPageList" class="table-responsive">
+          <div class="subtle">Cargando proveedores…</div>
         </div>
       </div>
 
-      <!-- Tabla dinámica por categoría o reporte puntual por SKU (nivel 2/3) -->
-      <div id="tabla-categoria" style="margin-top:14px">
-        <div class="card">
-          <p class="subtle">Seleccioná una categoría para ver sus productos, o entrá con <code>?sku=SKU</code> para ver el reporte puntual.</p>
+      <!-- Detalle y acciones del proveedor -->
+      <div class="card" style="margin-top:14px">
+        <div class="section-title">Detalle / Acciones</div>
+        <div id="proveedorDetalle" class="subtle">Selecciona un proveedor en la tabla para ver detalles o filtrar inventario.</div>
+      </div>
+
+      <!-- Historial de precios -->
+      <div class="card" style="margin-top:14px">
+        <div class="section-title">Últimos cambios de precio (últimos 20)</div>
+        <div id="preciosPageList">
+          <div class="subtle">Cargando cambios de precio…</div>
         </div>
       </div>
+
     </main>
   </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const cont = document.getElementById("proveedoresPageList");
+      if (!cont) return;
+      cont.addEventListener("click", (e) => {
+        const tr = e.target.closest("tr[data-prov]");
+        if (!tr) return;
+        const id = tr.getAttribute("data-prov");
+        const nombre = tr.querySelector("td") ? tr.querySelector("td").textContent.trim() : `Proveedor ${id}`;
+        const det = document.getElementById("proveedorDetalle");
+        det.innerHTML = `
+          <p><strong>${nombre}</strong> (ID: ${id})</p>
+          <p>Acciones:
+            <a class="btn" href="inventario.html?proveedor=${encodeURIComponent(id)}">Ver inventario de este proveedor</a>
+            <a class="btn" href="inventario.html">Ver inventario completo</a>
+          </p>
+        `;
+      });
+    });
+  </script>
 </body>
 </html>

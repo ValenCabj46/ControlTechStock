@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>Generar reporte | ControlTechStock</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="style.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
   <style>
     .container{max-width:980px;margin:0 auto;padding:0 16px}
     .section-title{margin:10px 0 6px;color:#cbd5e1;font-weight:800;letter-spacing:.4px}
@@ -22,7 +22,7 @@
     <nav class="nav">
       <a href="dashboard.html" class="btn-outline">Dashboard</a>
       <a href="inventario.html" class="btn-outline">Inventario</a>
-      <a href="reportes.html" class="btn-outline">Reportes</a>
+      <a href="reportes.html" class="btn-outline">Proveedores</a>
     </nav>
   </header>
 
@@ -31,7 +31,7 @@
 
     <div class="card" id="infoProducto">
       <div class="subtle">Producto seleccionado</div>
-      <h2 id="prodNombre" style="margin:6px 0 0"></h2>
+      <h2 id="prodNombre" style="margin:6px 0 0">—</h2>
       <div id="prodMeta" class="subtle"></div>
     </div>
 
@@ -49,8 +49,8 @@
         <div>
           <div class="subtle">Formato</div>
           <select id="repFormato" class="input">
-            <option>PDF</option>
             <option>CSV</option>
+            <option>PDF</option>
             <option>XLSX</option>
           </select>
         </div>
@@ -63,37 +63,49 @@
     </div>
   </main>
 
-  <script src="script.js"></script>
   <script>
-    (function(){
+    (async function(){
       const params = new URLSearchParams(location.search);
-      const id = Number(params.get("id"));
-      const p = (window.productos || []).find(x => x.id === id);
-
+      const sku = params.get("sku");
       const nombre = document.getElementById("prodNombre");
-      const meta   = document.getElementById("prodMeta");
+      const meta = document.getElementById("prodMeta");
       const btnVolver = document.getElementById("btnVolver");
+      const btnGen = document.getElementById("btnGenerar");
 
-      if (!p) {
-        nombre.textContent = "Producto no encontrado";
-        meta.textContent = "Verifique el enlace o regrese a la ficha.";
+      if (!sku) {
+        nombre.textContent = "SKU no indicado";
+        meta.textContent = "Abrí esta página desde la ficha del producto (botón Generar reporte).";
         btnVolver.onclick = () => history.back();
+        btnGen.disabled = true;
         return;
       }
 
-      nombre.textContent = p.nombre;
-      meta.textContent = `Categoría: ${p.categoria} · Stock: ${p.stock}`;
+      try {
+        const r = await fetch(`/api/producto/${encodeURIComponent(sku)}`);
+        if (!r.ok) throw new Error("No product");
+        const data = await r.json();
+        const p = data.producto;
+        nombre.textContent = `${p.Nombre} (${p.SKU})`;
+        meta.textContent = `Categoría: ${p.Categoria ?? '-'} · Stock: ${p.Stock}`;
 
-      btnVolver.onclick = () => {
-        window.location.href = `producto.html?id=${encodeURIComponent(p.id)}`;
-      };
+        btnVolver.onclick = () => { window.location.href = `producto.html?sku=${encodeURIComponent(p.SKU)}`; };
 
-      document.getElementById("btnGenerar").onclick = () => {
-        const desde   = document.getElementById("repDesde").value || "(sin fecha)";
-        const hasta   = document.getElementById("repHasta").value || "(sin fecha)";
-        const formato = document.getElementById("repFormato").value || "PDF";
-        alert(`(Demo) Generando reporte del producto:\n- ${p.nombre}\n- Desde: ${desde}\n- Hasta: ${hasta}\n- Formato: ${formato}`);
-      };
+        btnGen.onclick = () => {
+          const desde = document.getElementById("repDesde").value;
+          const hasta = document.getElementById("repHasta").value;
+          const params = new URLSearchParams();
+          if (desde) params.set("desde", desde);
+          if (hasta) params.set("hasta", hasta);
+          const url = `/api/producto/${encodeURIComponent(p.SKU)}/reporte.csv?${params.toString()}`;
+          window.location = url;
+        };
+      } catch (e) {
+        nombre.textContent = "Error cargando producto";
+        meta.textContent = "Ver consola para detalles.";
+        btnGen.disabled = true;
+        btnVolver.onclick = () => history.back();
+        console.error(e);
+      }
     })();
   </script>
 </body>

@@ -17,10 +17,11 @@
           <small>Panel principal</small>
         </div>
       </div>
+
       <nav class="nav">
         <a class="active" href="dashboard.html">Dashboard</a>
         <a href="inventario.html">Inventario</a>
-        <a href="reportes.html">Reportes</a>
+        <a href="reportes.html">Proveedores</a>
         <a href="usuarios.html">Usuarios</a>
         <a href="configuracion.html">Configuración</a>
       </nav>
@@ -67,17 +68,34 @@
         </div>
       </div>
 
-      <!-- AHORA el tbody lo completa script.js con /api/productos/criticos -->
+      <!-- Nivel 1: Categorías con productos críticos -->
       <div class="card">
-        <div class="section-title">Productos críticos (clic para ver detalle)</div>
-        <table class="table">
-        <thead>
-          <tr><th>Producto</th><th>Categoría</th><th>Stock</th><th>Estado</th></tr>
-        </thead>
-        <tbody id="tbodyCriticos">
-  </tbody>
-</table>
+        <div class="section-title">Categorías con productos con stock bajo (clic para ver detalle)</div>
+        <div id="categoriasCriticas" class="hstack" style="gap:10px; flex-wrap:wrap"></div>
+      </div>
 
+      <!-- Nivel 2: Productos de la categoría seleccionada -->
+      <div id="productosDeCategoria" style="margin-top:14px"></div>
+
+      <!-- Nuevas entidades resumen -->
+      <div class="grid kpis" style="margin-top:14px;">
+        <div class="card" id="cardProveedores">
+          <h3>Proveedores</h3>
+          <div id="proveedoresList">Cargando proveedores…</div>
+          <div class="subtle">Haz clic en un proveedor para filtrar Inventario</div>
+        </div>
+
+        <div class="card" id="cardUsuariosRol">
+          <h3>Usuarios por rol</h3>
+          <div id="usuariosPorRol">Cargando usuarios…</div>
+          <div class="subtle">Control de accesos: distribución por rol</div>
+        </div>
+
+        <div class="card" id="cardPrecios">
+          <h3>Últimos cambios de precio</h3>
+          <div id="preciosRecientes">Cargando historial de precios…</div>
+          <div class="subtle">Últimos 20 cambios</div>
+        </div>
       </div>
 
     </main>
